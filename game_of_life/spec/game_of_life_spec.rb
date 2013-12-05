@@ -1,5 +1,5 @@
 require "../lib/cell_class.rb"
-require "../lib/board_class.rb"
+require "../lib/game_class.rb"
 require 'debugger'
 
 RSpec.configure do |config|
