@@ -14,11 +14,14 @@ describe "time shift" do
 
     expect(parse.open_file).to_not eq(nil)
   end
+
   it "should be initialized with an array" do
     parse = Parser.new("../data/subtitle.srt")
 
     expect(parse.array).to be_a_kind_of(Array)
   end
+
+  
 
 
 end
