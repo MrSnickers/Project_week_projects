@@ -110,14 +110,17 @@ attr_accessor :leading_x, :leading_y
     set_left_start_point
     while leading_x < maze.length-1 do
       move_to_first_open_position
+      puts "\e[H\e[2J"
       print_board
+      sleep 0.8
     end
     @maze[leading_x][leading_y] = mouse_face
+    puts "\e[H\e[2J"
     print_board
+    sleep 0.8
   end
 
   def print_board
-    #@maze = maze.transpose
     width_counter = 0
     height_counter = 0
     while width_counter < maze.length do
