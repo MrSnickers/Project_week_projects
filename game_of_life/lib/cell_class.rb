@@ -6,12 +6,12 @@ class Cell
   attr_reader :location_x, :location_y, :game
 
 def initialize(x,y, game)
-  @alive = false
-  @stay_alive = false
-  @age = 0
   @location_x = x
   @location_y = y
   @game = game
+  @alive = false
+  @stay_alive = false
+  @age = 0
 end
 
 def validate(x_coordinate, y_coordinate)
@@ -32,18 +32,17 @@ def neighbor_check
 end
 
 def decide
-  if neighbor_check >3
-      @stay_alive = false
-      @age = 0 
-  elsif neighbor_check <1
-      @stay_alive = false
-      @age = 0     
+  if neighbor_check < 2 || neighbor_check > 3
+    @stay_alive = false
+    @age = 0
   elsif neighbor_check == 3
-     @stay_alive = true
-     @age += 1
-  elsif neighbor_check == 2
-     @stay_alive = true
-     @age += 1
+    @stay_alive = true
+    @age += 1
+  elsif neighbor_check == 2 && @alive == true
+    @stay_alive = @alive
+    @age +=1
+  elsif neighbor_check == 2 && @alive == false
+    @stay_alive = @alive
   end
 
 

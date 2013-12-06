@@ -4,8 +4,8 @@ require "./lib/cell_class.rb"
 require "./lib/game_class.rb"
 require "rainbow"
 
-game = Game.new(40, 40)
-game.randomize_live_cells(6)
+game = Game.new(20, 20)
+game.randomize_live_cells(80)
 puts "run? (y/n)"
 input = gets.chomp.downcase
 counter = 1
