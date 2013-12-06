@@ -1,11 +1,14 @@
 ###CLASS BOARD
 
+require "rainbow"
 
 class Board
 
+  @@All_boards = []
+
   ### Assumes wall_value does not equal "o" or "x." That there is only one open space for an entrance and an exit.That entrance and exit are on left and right hand sides.
 
-attr_reader :maze, :path_value, :open_value, :mouse_face
+attr_reader :maze, :path_value, :open_value, :mouse_face, :visited_value
 attr_accessor :leading_x, :leading_y
 
   def initialize
@@ -15,7 +18,7 @@ attr_accessor :leading_x, :leading_y
     @open_value
     @leading_x
     @leading_y
-    @mouse_face = "%"
+    @mouse_face = "\u2764"
   end
 
   def create_maze(file)
@@ -66,14 +69,22 @@ attr_accessor :leading_x, :leading_y
     valid_options.compact
   end
 
-###searches valid position array for the first position holding open_value.  Due to valid_positions array this is a clockwise search.######this might be useful for keeping wall on right hand side
+###searches along the unshuffled valid position array is essentially a clockwise search.######this might be useful for keeping wall on right hand side
   def move_to_first_open_position
-    valid_positions.each do |coordinate_array|
+    valid_positions.shuffle.each do |coordinate_array|
       if maze[coordinate_array[0]][coordinate_array[1]] == open_value
         @maze[leading_x][leading_y] = path_value
         @leading_x = coordinate_array[0]
         @leading_y = coordinate_array[1]
-        break
+        return
+      end
+    end
+    valid_positions.shuffle.each do |coordinate_array|
+        if maze[coordinate_array[0]][coordinate_array[1]] == path_value
+      @maze[leading_x][leading_y] = visited_value
+      @leading_x = coordinate_array[0]
+      @leading_y = coordinate_array[1]
+      break
       end
     end
   end
@@ -112,12 +123,12 @@ attr_accessor :leading_x, :leading_y
       move_to_first_open_position
       puts "\e[H\e[2J"
       print_board
-      sleep 0.8
+      sleep 0.1
     end
     @maze[leading_x][leading_y] = mouse_face
     puts "\e[H\e[2J"
     print_board
-    sleep 0.8
+    sleep 0.1
   end
 
   def print_board
@@ -125,15 +136,28 @@ attr_accessor :leading_x, :leading_y
     height_counter = 0
     while width_counter < maze.length do
       while height_counter < maze[0].length do
-        print maze[width_counter][height_counter]
+        if maze[width_counter][height_counter] == path_value
+          print maze[width_counter][height_counter].color(:white)
+        elsif maze[width_counter][height_counter] == visited_value
+          print maze[width_counter][height_counter].color(:blue)
+        elsif maze[width_counter][height_counter] == mouse_face
+          print maze[width_counter][height_counter].color(:green)
+        else
+          print maze[width_counter][height_counter].color(:magenta)
+        end
         height_counter += 1
       end
       height_counter = 0
       width_counter +=1
       puts ""
     end
-
   end
+
+
+def find_solution
+  self.set_left_start_point
+  self.process_right
+end
 
 
 end
