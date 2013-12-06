@@ -2,31 +2,52 @@
 
 
 class Cell
-  attr_accessor :alive
+  attr_accessor :alive, :stay_alive, :age
   attr_reader :location_x, :location_y, :game
 
 def initialize(x,y, game)
   @alive = false
+  @stay_alive = false
+  @age = 0
   @location_x = x
   @location_y = y
   @game = game
 end
 
+def validate(x_coordinate, y_coordinate)
+  if x_coordinate >= 0 && x_coordinate < game.width && y_coordinate >= 0 && y_coordinate < game.height
+    game.board[x_coordinate][y_coordinate]
+  else
+    nil
+  end
 
-def neighbor_array
-    x = @location_x
-    y = @location_y
-  [game.board[x-1][y-1], game.board[x-1][y], game.board[x-1][y+1], game.board[x][y-1], game.board[x][y+1], game.board[x+1][y-1], game.board[x+1][y], game.board[x+1][y+1]]
 end
 
-def live_neighbors
-  neighbor_array.select {|cell| cell.alive == true}
+def neighbor_check
+    x = @location_x
+    y = @location_y
+    valid_neighbor_array = [validate(x-1, y+1), validate(x-1, y+1), validate(x, y+1), validate(x+1, y+1), validate(x-1, y), validate(x+1, y), validate(x-1, y-1), validate(x, y-1), validate(x+1, y-1)]
+    valid_neighbor_array.compact.select {|cell| cell.alive == true}.length
+
 end
 
 def decide
-  @alive = false if live_neighbors.count >3
-  @alive = false if live_neighbors.count <1
-  @alive = true if live_neighbors.count == 3
+  if neighbor_check >3
+      @stay_alive = false
+      @age = 0 
+  elsif neighbor_check <1
+      @stay_alive = false
+      @age = 0     
+  elsif neighbor_check == 3
+     @stay_alive = true
+     @age += 1
+  elsif neighbor_check == 2
+     @stay_alive = true
+     @age += 1
   end
+
+
+end
+
 
 end

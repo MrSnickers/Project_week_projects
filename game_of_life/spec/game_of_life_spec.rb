@@ -14,16 +14,23 @@ RSpec.configure do |config|
 end
 
 describe "game of life" do
-  it "If has no live neighbors live_neighbors.count is zero" do
+  it "If a cell lives on the edge it does not count invalid neighbor indices" do
     game = Game.new(8,8)
-    expect(game.board[1][1].live_neighbors.count).to eq(0)
+    game.board[1][1].alive = true
+    expect(game.board[0][0].validate(-1,1)).to eq(nil)
+  end
+
+  it "If has no live neighbors neighbor_check is zero" do
+    game = Game.new(8,8)
+    expect(game.board[1][1].neighbor_check).to eq(0)
   end
 
   it "If it is alive and has no live neighbors it is no longer alive" do
     game = Game.new(8,8)
     game.board[1][1].alive = true
+    # debugger
     game.board[1][1].decide
-    expect(game.board[1][1].alive).to eq(false)
+    expect(game.board[1][1].stay_alive).to eq(false)
   end
 
     it "If it is not alive and has three live neighbors it becomes alive" do
@@ -33,9 +40,35 @@ describe "game of life" do
     game.board[2][1].alive = true
     game.board[2][2].decide
 
-    expect(game.board[2][2].alive).to eq(true)
+    expect(game.board[2][2].stay_alive).to eq(true)
   end
+
+     it "If it is not alive and has only two live neighbors it does not become alive" do
+    game = Game.new(8,8)
+    game.board[1][2].alive = true
+    game.board[2][1].alive = true
+    game.board[2][2].decide
+
+    expect(game.board[2][2].stay_alive).to eq(true)
   end
+
+    it "If it is alive and has more than three live neighbors it is no longer alive" do
+    game = Game.new(8,8)
+    game.board[1][1].alive = true
+    game.board[1][2].alive = true
+    game.board[2][1].alive = true
+    game.board[2][3].alive = true
+    game.board[2][2].decide
+
+    expect(game.board[2][2].stay_alive).to eq(false)
+  end
+
+    it "has an age of 0 when it is created" do
+    game = Game.new(8,8)
+    
+    expect(game.board[2][2].age).to eq(0)
+  end
+end
 
 describe "Board" do
   it "Can create a board" do
