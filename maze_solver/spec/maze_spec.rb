@@ -26,12 +26,12 @@ describe "Board" do
     expect(board.maze[0][0]).to be_a_kind_of(String)
   end  
 
-  it "the board should be populated" do
-    board = Board.new
-    board.create_maze("../lib/maze.rb")
+  # it "the board should be populated" do
+  #   board = Board.new
+  #   board.create_maze("../lib/maze.rb")
 
-    expect(board.maze[0][0]).to be_a_kind_of(String)
-  end
+  #   expect(board.maze[0][0]).to be_a_kind_of(String)
+  # end
 
   it "should have an entrance on the left side" do
     board = Board.new
@@ -48,12 +48,18 @@ describe "Board" do
     expect(board.find_left_entry).to be_a_kind_of(Integer)
   end
 
-  it "should know that it is done when it reaches the end" do
+ it "should set the index of the leading edge to be the same as the entry point" do
     board = Board.new
-    board.create_maze("../lib/shortest_maze.rb")
+    board.create_maze("../lib/maze.rb")
     board.set_open(" ")
+    board.stub (:find_left_entry).and_return(2)
 
-    expect(board.process).to eq("o")
+    expect(board.set_left_start_point.leading_y).to eq(2)
   end
+
+  # it "should know that it is done when it reaches the end" do
+
+  #   expect(board.process).to eq("o")
+  # end
 
 end
