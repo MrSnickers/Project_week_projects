@@ -1,6 +1,5 @@
 #### SPEC FOR MAZE SOLVER
 
-require "matrix"
 require "debugger"
 require "../lib/board_class.rb"
 

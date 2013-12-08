@@ -8,7 +8,7 @@ class Board
 
   ### Assumes wall_value does not equal "o" or "x." That there is only one open space for an entrance and an exit.That entrance and exit are on left and right hand sides.
 
-attr_reader :maze, :path_value, :open_value, :mouse_face, :visited_value
+attr_reader :maze, :path_value, :open_value, :mouse_face, :visited_value, :final_path_length
 attr_accessor :leading_x, :leading_y
 
   def initialize
@@ -18,7 +18,8 @@ attr_accessor :leading_x, :leading_y
     @open_value
     @leading_x
     @leading_y
-    @mouse_face = "\u2764"
+    @mouse_face = "\u1F42D" ## actual mouse is 1F42D heart is \u2764
+    @final_path_length
   end
 
   def create_maze(file)
@@ -33,6 +34,10 @@ attr_accessor :leading_x, :leading_y
 
   def set_open(open_value)
     @open_value = open_value
+  end
+
+  def reset_all_boards
+     @@All_boards = 0
   end
 
   def drop_path_marker
@@ -73,7 +78,11 @@ attr_accessor :leading_x, :leading_y
   def move_to_first_open_position
     valid_positions.shuffle.each do |coordinate_array|
       if maze[coordinate_array[0]][coordinate_array[1]] == open_value
-        @maze[leading_x][leading_y] = path_value
+        if @maze[leading_x][leading_y] == open_value
+            @maze[leading_x][leading_y] = path_value
+        elsif
+          @maze[leading_x][leading_y] = visited_value
+        end
         @leading_x = coordinate_array[0]
         @leading_y = coordinate_array[1]
         return
@@ -153,11 +162,6 @@ attr_accessor :leading_x, :leading_y
     end
   end
 
-
-def find_solution
-  self.set_left_start_point
-  self.process_right
-end
 
 
 end
