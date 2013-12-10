@@ -64,28 +64,37 @@ end
     width_counter = 0
     height_counter = 0
     red_color = 255
+    green_color = 255
     blue_color = 0
       while width_counter < width do
         while height_counter < height do
           if @board[width_counter][height_counter].age == 0
-              print " - ".color(:white)
+              print "   ".color(0, 0, 0)
           elsif
-              if @board[width_counter][height_counter].age <= 255
-                if board[width_counter][height_counter].age == 1
-                  blue_color = 0
-                elsif @board[width_counter][height_counter].age < 5
-                  blue_color = @board[width_counter][height_counter].age * 51
-                else
-                  blue_color = 255
-                end
-                if board[width_counter][height_counter].age == 1
+              if board[width_counter][height_counter].age == 1
                     red_color = 255
                 elsif @board[width_counter][height_counter].age < 5
                     red_color = 255 - @board[width_counter][height_counter].age * 51
                 else
                   red_color = 0
                 end
-            print " O ".color(255, red_color, blue_color)
+              if @board[width_counter][height_counter].age <= 255
+                if board[width_counter][height_counter].age == 1
+                  blue_color = 255
+                elsif @board[width_counter][height_counter].age < 5
+                  blue_color = 255 -(@board[width_counter][height_counter].age * 51)
+                else
+                  blue_color = 0
+                end
+
+                if board[width_counter][height_counter].age == 1
+                    green_color = 0
+                elsif @board[width_counter][height_counter].age < 5
+                    green_color = @board[width_counter][height_counter].age * 51
+                else
+                  green_color = 255
+                end
+            print " O ".color(red_color, green_color,  blue_color)
             else
               print " O ".color(255, 0, 255)
             end

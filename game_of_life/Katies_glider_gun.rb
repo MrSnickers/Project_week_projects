@@ -116,7 +116,7 @@ if input2 == "y"  || input2 == "Y"
                 game.print_board
                 counter += 1
                 puts "Generation #{counter}."
-                sleep 0.8
+                sleep 0.2
         end
 ###################################################### Exits if user does not want to view any more generations
 else

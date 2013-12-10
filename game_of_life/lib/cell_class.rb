@@ -26,7 +26,7 @@ end
 def neighbor_check
     x = @location_x
     y = @location_y
-    valid_neighbor_array = [validate(x-1, y+1), validate(x-1, y+1), validate(x, y+1), validate(x+1, y+1), validate(x-1, y), validate(x+1, y), validate(x-1, y-1), validate(x, y-1), validate(x+1, y-1)]
+    valid_neighbor_array = [validate(x-1, y+1), validate(x, y+1), validate(x+1, y+1), validate(x-1, y), validate(x+1, y), validate(x-1, y-1), validate(x, y-1), validate(x+1, y-1)]
     valid_neighbor_array.compact.select {|cell| cell.alive == true}.length
 
 end
@@ -39,10 +39,10 @@ def decide
     @stay_alive = true
     @age += 1
   elsif neighbor_check == 2 && @alive == true
-    @stay_alive = @alive
+    @stay_alive = true
     @age +=1
   elsif neighbor_check == 2 && @alive == false
-    @stay_alive = @alive
+    @stay_alive = false
   end
 
 
