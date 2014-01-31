@@ -1,6 +1,5 @@
 ### BOARD CLASS
 
-
 class Game
 
 attr_reader :board, :width, :height
@@ -60,52 +59,55 @@ end
     end
   end
 
+  def make_color(age)
+    red_color = 0
+    green_color = 0
+    blue_color = 0
+
+    if age == 1
+      red_color = 255
+    elsif age < 5
+      red_color = 255 - age * 51
+    else
+      red_color = 0
+    end
+    if age == 1
+      blue_color = 255
+    elsif age < 5
+      blue_color = 255 -(age * 51)
+    else
+      blue_color = 0
+    end
+    if age == 1
+      green_color = 0
+    elsif age < 5
+      green_color = age * 51
+    else
+      green_color = 255
+    end
+    [red_color, green_color, blue_color]
+  end
+
   def print_board
     width_counter = 0
     height_counter = 0
-    red_color = 255
-    green_color = 255
-    blue_color = 0
-      while width_counter < width do
-        while height_counter < height do
-          if @board[width_counter][height_counter].age == 0
-              print "   ".color(0, 0, 0)
-          elsif
-              if board[width_counter][height_counter].age == 1
-                    red_color = 255
-                elsif @board[width_counter][height_counter].age < 5
-                    red_color = 255 - @board[width_counter][height_counter].age * 51
-                else
-                  red_color = 0
-                end
-              if @board[width_counter][height_counter].age <= 255
-                if board[width_counter][height_counter].age == 1
-                  blue_color = 255
-                elsif @board[width_counter][height_counter].age < 5
-                  blue_color = 255 -(@board[width_counter][height_counter].age * 51)
-                else
-                  blue_color = 0
-                end
-
-                if board[width_counter][height_counter].age == 1
-                    green_color = 0
-                elsif @board[width_counter][height_counter].age < 5
-                    green_color = @board[width_counter][height_counter].age * 51
-                else
-                  green_color = 255
-                end
-            print " O ".color(red_color, green_color,  blue_color)
-            else
-              print " O ".color(255, 0, 255)
-            end
-          end
-          height_counter += 1
+    while width_counter < width do
+      while height_counter < height do
+        color_array = make_color(board[width_counter][height_counter].age)
+        red_color = color_array[0]
+        green_color = color_array[1]
+        blue_color = color_array[2]
+        if board[width_counter][height_counter].age == 0
+          print "   ".color(0,0,0)
+        else
+          print " O ".color(red_color, green_color, blue_color)
         end
-        height_counter = 0
-        width_counter += 1
-        print "\n"
+        height_counter += 1
       end
-
+      height_counter = 0
+      width_counter += 1
+      print "\n"
+    end
   end
 
 

@@ -1,8 +1,9 @@
-### GAME OF LIFE APP
+### COMMAND LINE GAME OF LIFE APP 2.0
 
+require "rainbow/ext/string"
 require "./lib/cell_class.rb"
 require "./lib/game_class.rb"
-require "rainbow"
+
 
 game = Game.new(20, 20)
 game.randomize_live_cells(100)
