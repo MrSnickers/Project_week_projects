@@ -60,31 +60,9 @@ end
   end
 
   def make_color(age)
-    red_color = 0
-    green_color = 0
-    blue_color = 0
-
-    if age == 1
-      red_color = 255
-    elsif age < 5
-      red_color = 255 - age * 51
-    else
-      red_color = 0
-    end
-    if age == 1
-      blue_color = 255
-    elsif age < 5
-      blue_color = 255 -(age * 51)
-    else
-      blue_color = 0
-    end
-    if age == 1
-      green_color = 0
-    elsif age < 5
-      green_color = age * 51
-    else
-      green_color = 255
-    end
+    red_color = 170 - 170*Math.exp((1-age)*0.1)
+    green_color = 255*Math.exp(1-age)
+    blue_color = 255 - 255*Math.exp(1-age)
     [red_color, green_color, blue_color]
   end
 
